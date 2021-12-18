@@ -5,9 +5,9 @@ const path = require('path')
 
 const defaultRoute = require('./routes')
 const auth = require('./routes/auth')
+const configs = require('./config')
 
-const PORT = process.env.PORT || 5000
-const HOST = process.env.HOST || '127.0.0.1'
+const {PORT, HOST} = configs
 
 const server = express()
 server.use(express.static(path.join(__dirname, 'public')))

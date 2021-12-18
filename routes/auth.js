@@ -1,20 +1,13 @@
 const axios = require('axios')
 const { Router } = require('express')
-const path = require('path')
+const configs = require('../config')
 
 const router = Router({
   caseSensitive: false
 })
 
-const PORT = process.env.PORT || 5000
-const HOST = process.env.HOST || '127.0.0.1'
-
-const GITHUB_AUTH_URL = process.env.GITHUB_AUTH_URL
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID
-const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET
-
 // auth url
-const authUrl = `${GITHUB_AUTH_URL}?client_id=${GITHUB_CLIENT_ID}`
+const authUrl = `${configs.GITHUB_AUTH_URL}?client_id=${configs.GITHUB_CLIENT_ID}`
 
 // serve main page
 router.get('/auth', (request, response) => {
@@ -24,7 +17,7 @@ router.get('/auth', (request, response) => {
 router.get('/auth_redirect', async (request, response) => {
   const { code } = request.query
   const httpClient = axios.create()
-  const githubResponse = await httpClient.get(`https://github.com/login/oauth/access_token?code=${code}&client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}`, {
+  const githubResponse = await httpClient.get(`https://github.com/login/oauth/access_token?code=${code}&client_id=${configs.GITHUB_CLIENT_ID}&client_secret=${configs.GITHUB_CLIENT_SECRET}`, {
     headers: {
       Accept: 'application/json'
     }
